@@ -65,7 +65,7 @@ namespace Highcontrast
     {
 
         // frames
-        Frame_FrameWidth = 4,
+        Frame_FrameWidth = 5,
         Frame_FrameRadius = 4,
 
         // layout

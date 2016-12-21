@@ -90,7 +90,7 @@ namespace Highcontrast
 
         //* focus color
         QColor focusColor( const QPalette& palette ) const
-        { return palette.highlight().color(); }
+        { return palette.windowText().color(); }
 
         //* negative text color (used for close button)
         QColor negativeText( const QPalette& palette ) const

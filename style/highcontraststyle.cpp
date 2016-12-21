@@ -32,6 +32,7 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QDebug>
 #include <QDial>
 #include <QDBusConnection>
 #include <QDockWidget>
@@ -47,6 +48,7 @@
 #include <QRadioButton>
 #include <QScrollBar>
 #include <QItemDelegate>
+#include <QSpinBox>
 #include <QSplitterHandle>
 #include <QTextEdit>
 #include <QToolBar>
@@ -500,21 +502,21 @@ namespace Highcontrast
     {
 
         // All, used especially for active elements in a focused window
-        palette.setColor(QPalette::All,      QPalette::Window,          QColor("#ededed"));
-        palette.setColor(QPalette::All,      QPalette::WindowText,      QColor("#2e3436"));
+        palette.setColor(QPalette::All,      QPalette::Window,          QColor("white"));
+        palette.setColor(QPalette::All,      QPalette::WindowText,      QColor("black"));
         palette.setColor(QPalette::All,      QPalette::Base,            QColor("white"));
-        palette.setColor(QPalette::All,      QPalette::AlternateBase,   QColor("#ededed"));
-        palette.setColor(QPalette::All,      QPalette::ToolTipBase,     QColor("#060606"));
+        palette.setColor(QPalette::All,      QPalette::AlternateBase,   QColor("white"));
+        palette.setColor(QPalette::All,      QPalette::ToolTipBase,     QColor("white"));
         palette.setColor(QPalette::All,      QPalette::ToolTipText,     QColor("white"));
-        palette.setColor(QPalette::All,      QPalette::Text,            QColor("#2e3436"));
-        palette.setColor(QPalette::All,      QPalette::Button,          QColor("#eeeeee"));
-        palette.setColor(QPalette::All,      QPalette::ButtonText,      QColor("#2e3436"));
+        palette.setColor(QPalette::All,      QPalette::Text,            QColor("black"));
+        palette.setColor(QPalette::All,      QPalette::Button,          QColor("white"));
+        palette.setColor(QPalette::All,      QPalette::ButtonText,      QColor("black"));
         palette.setColor(QPalette::All,      QPalette::BrightText,      QColor("white"));
 
-        palette.setColor(QPalette::All,      QPalette::Light,           QColor("#fafafa"));
-        palette.setColor(QPalette::All,      QPalette::Midlight,        QColor("#f3f3f3"));
-        palette.setColor(QPalette::All,      QPalette::Dark,            QColor("#e0e0e0"));
-        palette.setColor(QPalette::All,      QPalette::Mid,             QColor("#b4b4b4"));
+        palette.setColor(QPalette::All,      QPalette::Light,           QColor("white"));
+        palette.setColor(QPalette::All,      QPalette::Midlight,        QColor("white"));
+        palette.setColor(QPalette::All,      QPalette::Dark,            QColor("black"));
+        palette.setColor(QPalette::All,      QPalette::Mid,             QColor("gray"));
         palette.setColor(QPalette::All,      QPalette::Shadow,          QColor("black"));
 
         palette.setColor(QPalette::All,      QPalette::Highlight,       QColor("#4a90d9"));
@@ -524,21 +526,21 @@ namespace Highcontrast
         palette.setColor(QPalette::All,      QPalette::LinkVisited,     QColor("#2a76c6"));
 
         // Exceptions for disabled elements in a focused window
-        palette.setColor(QPalette::Disabled, QPalette::Window,          QColor("#f4f4f4"));
-        palette.setColor(QPalette::Disabled, QPalette::WindowText,      QColor("#8d9091"));
+        palette.setColor(QPalette::Disabled, QPalette::Window,          QColor("white"));
+        palette.setColor(QPalette::Disabled, QPalette::WindowText,      QColor("black"));
         palette.setColor(QPalette::Disabled, QPalette::Base,            QColor("white"));
-        palette.setColor(QPalette::Disabled, QPalette::AlternateBase,   QColor("#ededed"));
+        palette.setColor(QPalette::Disabled, QPalette::AlternateBase,   QColor("white"));
     //     palette.setColor(QPalette::Disabled, QPalette::ToolTipBase,     QColor("#ff1234"));
     //     palette.setColor(QPalette::Disabled, QPalette::ToolTipText,     QColor("#ff1234"));
-        palette.setColor(QPalette::Disabled, QPalette::Text,            QColor("#8d9091"));
-        palette.setColor(QPalette::Disabled, QPalette::Button,          QColor("#f4f4f4"));
-        palette.setColor(QPalette::Disabled, QPalette::ButtonText,      QColor("#8d9091"));
-        palette.setColor(QPalette::Disabled, QPalette::BrightText,      QColor("#ededed"));
+        palette.setColor(QPalette::Disabled, QPalette::Text,            QColor("black"));
+        palette.setColor(QPalette::Disabled, QPalette::Button,          QColor("white"));
+        palette.setColor(QPalette::Disabled, QPalette::ButtonText,      QColor("black"));
+        palette.setColor(QPalette::Disabled, QPalette::BrightText,      QColor("white"));
 
-        palette.setColor(QPalette::Disabled, QPalette::Light,           QColor("#f4f4f4"));
-        palette.setColor(QPalette::Disabled, QPalette::Midlight,        QColor("#f4f4f4"));
-        palette.setColor(QPalette::Disabled, QPalette::Dark,            QColor("#f4f4f4"));
-        palette.setColor(QPalette::Disabled, QPalette::Mid,             QColor("#c3c3c3"));
+        palette.setColor(QPalette::Disabled, QPalette::Light,           QColor("white"));
+        palette.setColor(QPalette::Disabled, QPalette::Midlight,        QColor("white"));
+        palette.setColor(QPalette::Disabled, QPalette::Dark,            QColor("black"));
+        palette.setColor(QPalette::Disabled, QPalette::Mid,             QColor("gray"));
         palette.setColor(QPalette::Disabled, QPalette::Shadow,          QColor("black"));
 
         palette.setColor(QPalette::Disabled, QPalette::Highlight,       QColor("#4a90d9"));
@@ -549,21 +551,21 @@ namespace Highcontrast
 
 
         // Exceptions for an unfocused window
-        palette.setColor(QPalette::Inactive, QPalette::Window,          QColor("#ededed"));
-        palette.setColor(QPalette::Inactive, QPalette::WindowText,      QColor("#54595a"));
-        palette.setColor(QPalette::Inactive, QPalette::Base,            QColor("#fcfcfc"));
-        palette.setColor(QPalette::Inactive, QPalette::AlternateBase,   QColor("#ededed"));
+        palette.setColor(QPalette::Inactive, QPalette::Window,          QColor("white"));
+        palette.setColor(QPalette::Inactive, QPalette::WindowText,      QColor("black"));
+        palette.setColor(QPalette::Inactive, QPalette::Base,            QColor("white"));
+        palette.setColor(QPalette::Inactive, QPalette::AlternateBase,   QColor("white"));
     //     palette.setColor(QPalette::Inactive, QPalette::ToolTipBase,     QColor("#ff1234"));
     //     palette.setColor(QPalette::Inactive, QPalette::ToolTipText,     QColor("#ff1234"));
-        palette.setColor(QPalette::Inactive, QPalette::Text,            QColor("#54595a"));
-        palette.setColor(QPalette::Inactive, QPalette::Button,          QColor("#ededed"));
-        palette.setColor(QPalette::Inactive, QPalette::ButtonText,      QColor("#54595a"));
-        palette.setColor(QPalette::Inactive, QPalette::BrightText,      QColor("#ededed"));
+        palette.setColor(QPalette::Inactive, QPalette::Text,            QColor("black"));
+        palette.setColor(QPalette::Inactive, QPalette::Button,          QColor("white"));
+        palette.setColor(QPalette::Inactive, QPalette::ButtonText,      QColor("black"));
+        palette.setColor(QPalette::Inactive, QPalette::BrightText,      QColor("white"));
 
-        palette.setColor(QPalette::Inactive, QPalette::Light,           QColor("#ededed"));
-        palette.setColor(QPalette::Inactive, QPalette::Midlight,        QColor("#ededed"));
-        palette.setColor(QPalette::Inactive, QPalette::Dark,            QColor("#ededed"));
-        palette.setColor(QPalette::Inactive, QPalette::Mid,             QColor("#c3c3c3"));
+        palette.setColor(QPalette::Inactive, QPalette::Light,           QColor("white"));
+        palette.setColor(QPalette::Inactive, QPalette::Midlight,        QColor("white"));
+        palette.setColor(QPalette::Inactive, QPalette::Dark,            QColor("black"));
+        palette.setColor(QPalette::Inactive, QPalette::Mid,             QColor("gray"));
         palette.setColor(QPalette::Inactive, QPalette::Shadow,          QColor("black"));
 
         palette.setColor(QPalette::Inactive, QPalette::Highlight,       QColor("#4a90d9"));
@@ -2262,9 +2264,9 @@ namespace Highcontrast
             {
 
                 QRect arrowRect(
-                    rect.right() - rect.height() + 1,
+                    rect.right() - rect.height() - 1,
                     rect.top(),
-                    rect.height(),
+                    rect.height() + 1,
                     rect.height() );
 
                 return arrowRect;
@@ -2278,7 +2280,7 @@ namespace Highcontrast
                 int frameWidth( pixelMetric( PM_ComboBoxFrameWidth, option, widget ) );
                 labelRect = QRect(
                     rect.left(), rect.top(),
-                    rect.width() - rect.height() - 4,
+                    rect.width() - rect.height() - 2,
                     rect.height() );
 
                 // remove margins
@@ -2315,16 +2317,16 @@ namespace Highcontrast
 
             case SC_SpinBoxUp:
 
-                return QRect(rect.right() - rect.height() - 1,
+                return QRect(rect.right() - rect.height() + 2,
                              rect.top(),
-                             rect.height(),
+                             rect.height() - 2,
                              rect.height() - 1
                             );
 
             case SC_SpinBoxDown:
             {
 
-                return QRect(rect.right() - 2 * rect.height(),
+                return QRect(rect.right() - 2 * rect.height() + 1,
                              rect.top(),
                              rect.height(),
                              rect.height() - 1
@@ -3182,14 +3184,14 @@ namespace Highcontrast
         if( rect.width() < 10 ) return true;
 
         QColor outlineColor( palette.color( QPalette::Dark ) );
-        QPen pen(outlineColor.darker(115), 1);
+        QPen pen(outlineColor.darker(115), 2);
         pen.setStyle( Qt::CustomDashLine );
-        pen.setDashPattern(QVector<qreal>() << 2 << 1);
+        pen.setDashPattern(QVector<qreal>() << 1 << 2);
 
         painter->setRenderHint( QPainter::Antialiasing, false );
 
         painter->setPen( pen );
-        painter->drawRoundedRect( rect, 2, 2 );
+        painter->drawRoundedRect( rect, 3, 3 );
 
         return true;
 
@@ -6169,7 +6171,7 @@ namespace Highcontrast
                     _helper->renderFlatButtonFrame( painter, subControlRect( CC_ComboBox, option, SC_ComboBoxArrow, widget), background, outline, shadow, hasFocus, sunken, mouseOver );
 
                     QStyleOptionComplex tmpOpt(*option);
-                    tmpOpt.rect.setWidth(tmpOpt.rect.width() - subControlRect( CC_ComboBox, option, SC_ComboBoxArrow, widget).width() + 3);
+                    tmpOpt.rect.setWidth(tmpOpt.rect.width() - subControlRect( CC_ComboBox, option, SC_ComboBoxArrow, widget).width() + 1);
 
                     drawPrimitive( PE_FrameLineEdit, &tmpOpt, painter, widget );
 
@@ -6247,7 +6249,7 @@ namespace Highcontrast
         // store palette and rect
         const QPalette& palette( option->palette );
         const QRect& rect( option->rect );
-
+        bool hasFocus( option->state & State_HasFocus );
 
         if( option->subControls & SC_SpinBoxFrame )
         {
@@ -6266,7 +6268,16 @@ namespace Highcontrast
 
             } else {
 
-                drawPrimitive( PE_FrameLineEdit, option, painter, widget );
+                if (hasFocus) {
+                    QColor outline = _helper->buttonFocusOutlineColor(palette);
+                    painter->setPen( QPen( outline, 2 ) );
+                }
+                else {
+                    QColor outline = _helper->buttonOutlineColor(palette, false, false);
+                    painter->setPen( QPen( outline, 2 ) );
+                }
+                painter->setBrush( Qt::transparent );
+                painter->drawRoundedRect( rect.adjusted(1, 1, -1, -1), 3, 3 );
 
             }
 
@@ -6778,18 +6789,26 @@ namespace Highcontrast
             painter->setBrush(Qt::NoBrush);
             painter->setPen(outline);
             int highlight = hasFocus ? 1 : 0;
-            painter->drawLine(arrowRect.left(), arrowRect.top() + 2 + highlight, arrowRect.left(), arrowRect.bottom() - 1 - highlight);
-            painter->drawLine(arrowRect.right(), arrowRect.top() + 2 + highlight, arrowRect.right(), arrowRect.bottom() - 1 - highlight);
+            painter->drawLine(arrowRect.left(), arrowRect.top() + 1 + highlight, arrowRect.left(), arrowRect.bottom() - highlight);
+            painter->drawLine(arrowRect.right() + 1, arrowRect.top() + 1 + highlight, arrowRect.right() + 1, arrowRect.bottom() - highlight);
         }
 
         if (true) {
             painter->setPen(Qt::NoPen);
             QColor background = Helper::mix( palette.base().color(), outline, 0.4 * opacity + 0.6 * pressedOpacity );
             painter->setBrush(background);
-            if (hasFocus)
-                painter->drawRect(arrowRect.adjusted(1, 3, -1, -2));
-            else
-                painter->drawRect(arrowRect.adjusted(1, 2, -1, -1));
+            if (subControl == SC_SpinBoxDown) {
+                if (hasFocus)
+                    painter->drawRect(arrowRect.adjusted(1, 2, 0, -1));
+                else
+                    painter->drawRect(arrowRect.adjusted(1, 2, 0, -2));
+            }
+            else {
+                if (hasFocus)
+                    painter->drawRect(arrowRect.adjusted(0, 2, -1, -1));
+                else
+                    painter->drawRect(arrowRect.adjusted(0, 2, -1, -2));
+            }
         }
 
         // render

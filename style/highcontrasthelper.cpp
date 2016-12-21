@@ -70,7 +70,7 @@ namespace Highcontrast
     QColor Helper::frameOutlineColor( const QPalette& palette, bool mouseOver, bool hasFocus, qreal opacity, AnimationMode mode ) const
     {
 
-        QColor outline( mix( palette.color( QPalette::Window ), palette.color( QPalette::WindowText ), 0.25 ) );
+        QColor outline( mix( palette.color( QPalette::Window ), palette.color( QPalette::WindowText ), 0.5 ) );
 
         // focus takes precedence over hover
         if( mode == AnimationFocus )
@@ -163,7 +163,7 @@ namespace Highcontrast
     QColor Helper::buttonOutlineColor( const QPalette& palette, bool mouseOver, bool hasFocus, qreal opacity, AnimationMode mode ) const
     {
 
-        QColor outline( mix( palette.color( QPalette::Button ), palette.color( QPalette::ButtonText ), 0.3 ) );
+        QColor outline( mix( palette.color( QPalette::Button ), palette.color( QPalette::ButtonText ), 0.5 ) );
 
         return outline;
 
@@ -174,20 +174,16 @@ namespace Highcontrast
     {
 
         QColor background( palette.color( QPalette::Button ) );
+        QColor foreground( palette.color( QPalette::ButtonText ) );
 
         if ( mode == AnimationPressed) {
-            background = background.darker(100 + 15.0 * opacity);
+            background = mix(background, foreground, opacity);
         } else if ( sunken ) {
-            background = background.darker(115);
-        } else if( mode == AnimationHover )
-        {
-            background = mix(background, background.lighter( 120 ), opacity);
-            //if( hasFocus ) background = mix( focus, hover, opacity );
-
+            background = foreground;
+        } else if( mode == AnimationHover ) {
+            background = mix(background, foreground, opacity / 3.0);
         } else if( mouseOver ) {
-
-            background = background.lighter( 120 );
-            //background = hoverColor( palette );
+            background = mix(background, foreground, 1.0/3.0);
         }
 
         return background;
@@ -363,7 +359,7 @@ namespace Highcontrast
 
         painter->save();
 
-        QPen pen(color, 1);
+        QPen pen(color, 3);
         pen.setStyle(Qt::DotLine);
 
         painter->setRenderHint( QPainter::Antialiasing, false );
@@ -395,9 +391,9 @@ namespace Highcontrast
                 frameRect.adjust(0.5, 0.5, -0.5, -0.5);
             }
             else {
-                painter->setPen( outline );
+                painter->setPen( QPen( outline, 1 ) );
             }
-            frameRect.adjust( 0.5, 0.5, -0.5, -0.5 );
+            frameRect.adjust(-0.5, -0.5, 0.5, 0.5);
             radius = qMax( radius - 1, qreal( 0.0 ) );
 
         } else {
@@ -435,9 +431,9 @@ namespace Highcontrast
                 frameRect.adjust(0.5, 0.5, -0.5, -0.5);
             }
             else {
-                painter->setPen( outline );
+                painter->setPen( QPen ( outline, 1 ) );
             }
-            frameRect.adjust( 0.5, 0.5, -0.5, -0.5 );
+            frameRect.adjust(-0.5, -0.5, 0.5, 0.5);
             radius = qMax( radius - 1, qreal( 0.0 ) );
 
         } else {
@@ -555,9 +551,8 @@ namespace Highcontrast
         if( outline.isValid() )
         {
 
-            painter->setPen( QPen( outline, 1.0 ) );
+            painter->setPen( QPen( outline, 2.0 ) );
 
-            frameRect.adjust( 0.5, 0.5, -0.5, -0.5 );
             radius = qMax( radius - 1, qreal( 0.0 ) );
 
         } else painter->setPen( Qt::NoPen );
@@ -565,18 +560,7 @@ namespace Highcontrast
         // content
         if( color.isValid() )
         {
-
-            QLinearGradient gradient( frameRect.topLeft(), frameRect.bottomLeft() );
-            //gradient.setColorAt( 0, color.darker( sunken ? 110 : (hasFocus|mouseOver) ? 85 : 100 ) );
-            //gradient.setColorAt( 1, color.darker( sunken ? 130 : (hasFocus|mouseOver) ? 95 : 110 ) );
-            if (sunken) {
-                gradient.setColorAt( 0, color);
-            }
-            else {
-                gradient.setColorAt( 0, color.lighter( 100 ) );
-                gradient.setColorAt( 1, color.darker( 110 ) );
-            }
-            painter->setBrush( gradient );
+            painter->setBrush( color );
 
         } else painter->setBrush( Qt::NoBrush );
 
@@ -603,9 +587,8 @@ namespace Highcontrast
         if( outline.isValid() )
         {
 
-            painter->setPen( QPen( outline, 1.0 ) );
+            painter->setPen( QPen( outline, 2.0 ) );
 
-            frameRect.adjust( 0.5, 0.5, -0.5, -0.5 );
             radius = qMax( radius - 1, qreal( 0.0 ) );
 
         } else painter->setPen( Qt::NoPen );
@@ -614,24 +597,14 @@ namespace Highcontrast
         if( color.isValid() )
         {
 
-            QLinearGradient gradient( frameRect.topLeft(), frameRect.bottomLeft() );
-            //gradient.setColorAt( 0, color.darker( sunken ? 110 : (hasFocus|mouseOver) ? 85 : 100 ) );
-            //gradient.setColorAt( 1, color.darker( sunken ? 130 : (hasFocus|mouseOver) ? 95 : 110 ) );
-            if (sunken) {
-                gradient.setColorAt( 0, color);
-            }
-            else {
-                gradient.setColorAt( 0, color.lighter( 100 ) );
-                gradient.setColorAt( 1, color.darker( 110 ) );
-            }
-            painter->setBrush( gradient );
+            painter->setBrush( color );
 
         } else painter->setBrush( Qt::NoBrush );
 
         QPainterPath path;
         path.setFillRule( Qt::WindingFill );
         path.addRoundedRect( frameRect.adjusted(2*radius, 0, 0, 0), radius, radius );
-        path.addRect( frameRect.adjusted(0, 0, -2*radius, 0) );
+        path.addRect( frameRect.adjusted(1, 0, -2*radius, 0) );
         painter->drawPath( path.simplified() );
 
         // render
