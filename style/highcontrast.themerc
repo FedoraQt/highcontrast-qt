@@ -1,0 +1,5 @@
+[Misc]
+Name=Highcontrast
+Comment=Qt widget style for GNOME
+[KDE]
+WidgetStyle=Highcontrast
