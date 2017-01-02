@@ -869,20 +869,10 @@ namespace Highcontrast
         // content
         {
 
+            painter->setPen( QPen( outline, 2 ) );
+            painter->setBrush( background );
 
-            QLinearGradient gradient( frameRect.topLeft(), frameRect.bottomLeft() );
-            if (sunken) {
-                gradient.setColorAt( 0, background);
-            }
-            else {
-                gradient.setColorAt( 0, background.lighter( 100 ) );
-                gradient.setColorAt( 1, background.darker( 110 ) );
-            }
-
-            painter->setPen( QPen( outline, 1 ) );
-            painter->setBrush( gradient );
-
-            QRectF contentRect( frameRect.adjusted( 0.5, 0.5, -0.5, -0.5 ) );
+            QRectF contentRect( frameRect );
             painter->drawEllipse( contentRect );
 
         }
