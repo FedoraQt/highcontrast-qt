@@ -180,10 +180,6 @@ namespace Highcontrast
             background = mix(background, foreground, opacity);
         } else if ( sunken ) {
             background = foreground;
-        } else if( mode == AnimationHover ) {
-            background = mix(background, foreground, opacity / 3.0);
-        } else if( mouseOver ) {
-            background = mix(background, foreground, 1.0/3.0);
         }
 
         return background;
@@ -199,33 +195,14 @@ namespace Highcontrast
     }
 
     //____________________________________________________________________
-    QColor Helper::sliderOutlineColor( const QPalette& palette, bool mouseOver, bool hasFocus, qreal opacity, AnimationMode mode ) const
+    QColor Helper::sliderOutlineColor( const QPalette& palette, bool pressed, bool hasFocus, qreal opacity, AnimationMode mode ) const
     {
 
         QColor outline( mix( palette.color( QPalette::Window ), palette.color( QPalette::WindowText ), 0.4 ) );
 
-        // hover takes precedence over focus
-        if( mode == AnimationHover )
-        {
-
-            QColor hover( hoverColor( palette ) );
-            QColor focus( focusColor( palette ) );
-            if( hasFocus ) outline = mix( focus, hover, opacity );
-            else outline = mix( outline, hover, opacity );
-
-        } else if( mouseOver ) {
-
-            outline = hoverColor( palette );
-
-        } else if( mode == AnimationFocus ) {
-
-            QColor focus( focusColor( palette ) );
-            outline = mix( outline, focus, opacity );
-
-        } else if( hasFocus ) {
-
+        // pressed takes precedence over focus
+        if (pressed) {
             outline = focusColor( palette );
-
         }
 
         return outline;
@@ -315,40 +292,24 @@ namespace Highcontrast
     }
 
     //______________________________________________________________________________
-    void Helper::renderFocusRect( QPainter* painter, const QRect& rect, const QColor& color, const QColor& outline, Sides sides ) const
+    void Helper::renderFocusRect( QPainter* painter, const QRect& rect, const QPalette& palette ) const
     {
-        if( !color.isValid() ) return;
 
         painter->save();
-        painter->setRenderHints( QPainter::Antialiasing );
-        painter->setBrush( color );
 
-        if( !( outline.isValid() && sides ) )
-        {
+        QColor outlineColor( palette.color( QPalette::Dark ) );
+        QPen pen(outlineColor.darker(115), 2);
+        pen.setStyle( Qt::CustomDashLine );
+        pen.setDashPattern(QVector<qreal>() << 1 << 2);
 
-            painter->setPen( Qt::NoPen );
-            painter->drawRect( rect );
+        painter->setRenderHint( QPainter::Antialiasing, false );
 
-        } else {
-
-            painter->setClipRect( rect );
-
-            QRectF copy( rect );
-            copy.adjust( 0.5, 0.5, -0.5, -0.5 );
-
-            qreal radius( frameRadius( -1.0 ) );
-            if( !(sides&SideTop) ) copy.adjust( 0, -radius, 0, 0 );
-            if( !(sides&SideBottom) ) copy.adjust( 0, 0, 0, radius );
-            if( !(sides&SideLeft) ) copy.adjust( -radius, 0, 0, 0 );
-            if( !(sides&SideRight) ) copy.adjust( 0, 0, radius, 0 );
-
-            painter->setPen( outline );
-            // painter->setBrush( Qt::NoBrush );
-            painter->drawRoundedRect( copy, radius, radius );
-
-        }
+        painter->setBrush( Qt::NoBrush );
+        painter->setPen( pen );
+        painter->drawRoundedRect( rect, 3, 3 );
 
         painter->restore();
+
         return;
     }
 

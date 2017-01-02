@@ -154,7 +154,7 @@ namespace Highcontrast
         QColor toolButtonColor( const QPalette&, bool mouseOver, bool hasFocus, bool sunken, qreal opacity = AnimationData::OpacityInvalid, AnimationMode = AnimationNone ) const;
 
         //* slider outline color, using animations
-        QColor sliderOutlineColor( const QPalette&, bool mouseOver, bool hasFocus, qreal opacity = AnimationData::OpacityInvalid, AnimationMode = AnimationNone ) const;
+        QColor sliderOutlineColor( const QPalette&, bool pressed, bool hasFocus, qreal opacity = AnimationData::OpacityInvalid, AnimationMode = AnimationNone ) const;
 
         //* scrollbar handle color, using animations
         QColor scrollBarHandleColor( const QPalette&, bool mouseOver, bool hasFocus, qreal opacity = AnimationData::OpacityInvalid, AnimationMode = AnimationNone ) const;
@@ -177,7 +177,7 @@ namespace Highcontrast
         void renderDebugFrame( QPainter*, const QRect& ) const;
 
         //* focus rect
-        void renderFocusRect( QPainter*, const QRect&, const QColor&, const QColor& outline = QColor(), Sides = 0 ) const;
+        void renderFocusRect(QPainter*, const QRect& , const QPalette &palette) const;
 
         //* focus line
         void renderFocusLine( QPainter*, const QRect&, const QColor& ) const;

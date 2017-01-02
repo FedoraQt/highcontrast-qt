@@ -119,12 +119,12 @@ namespace Highcontrast
         if( qobject_cast<QToolButton*>(widget) )
         {
 
-            _toolButtonEngine->registerWidget( widget, AnimationHover|AnimationPressed );
-            _widgetStateEngine->registerWidget( widget, AnimationHover|AnimationPressed );
+            _toolButtonEngine->registerWidget( widget, AnimationPressed );
+            _widgetStateEngine->registerWidget( widget, AnimationPressed );
 
         } else if( qobject_cast<QCheckBox*>(widget) || qobject_cast<QRadioButton*>(widget) ) {
 
-            _widgetStateEngine->registerWidget( widget, AnimationHover|AnimationFocus|AnimationPressed );
+            _widgetStateEngine->registerWidget( widget, AnimationFocus|AnimationPressed );
 
         } else if( qobject_cast<QAbstractButton*>(widget) ) {
 
@@ -132,7 +132,7 @@ namespace Highcontrast
             if( qobject_cast<QToolBox*>( widget->parent() ) )
             { _toolBoxEngine->registerWidget( widget ); }
 
-            _widgetStateEngine->registerWidget( widget, AnimationHover|AnimationPressed );
+            _widgetStateEngine->registerWidget( widget, AnimationPressed );
 
         }
 
@@ -140,33 +140,33 @@ namespace Highcontrast
         else if( QGroupBox* groupBox = qobject_cast<QGroupBox*>( widget ) )
         {
             if( groupBox->isCheckable() )
-            { _widgetStateEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
+            { _widgetStateEngine->registerWidget( widget, AnimationFocus ); }
         }
 
         // sliders
-        else if( qobject_cast<QScrollBar*>( widget ) ) { _scrollBarEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
-        else if( qobject_cast<QSlider*>( widget ) ) { _widgetStateEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
-        else if( qobject_cast<QDial*>( widget ) ) { _dialEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
+        else if( qobject_cast<QScrollBar*>( widget ) ) { _scrollBarEngine->registerWidget( widget, AnimationFocus ); }
+        else if( qobject_cast<QSlider*>( widget ) ) { _widgetStateEngine->registerWidget( widget, AnimationFocus ); }
+        else if( qobject_cast<QDial*>( widget ) ) { _dialEngine->registerWidget( widget, AnimationFocus ); }
 
         // progress bar
         else if( qobject_cast<QProgressBar*>( widget ) ) { _busyIndicatorEngine->registerWidget( widget ); }
 
         // combo box
         else if( qobject_cast<QComboBox*>( widget ) ) {
-            _comboBoxEngine->registerWidget( widget, AnimationHover|AnimationPressed );
-            _inputWidgetEngine->registerWidget( widget, AnimationHover|AnimationFocus|AnimationPressed );
+            _comboBoxEngine->registerWidget( widget, AnimationPressed );
+            _inputWidgetEngine->registerWidget( widget, AnimationFocus|AnimationPressed );
         }
 
         // spinbox
         else if( qobject_cast<QSpinBox*>( widget ) ) {
             _spinBoxEngine->registerWidget( widget );
-            _inputWidgetEngine->registerWidget( widget, AnimationHover|AnimationFocus|AnimationPressed );
+            _inputWidgetEngine->registerWidget( widget, AnimationFocus|AnimationPressed );
         }
 
         // editors
-        else if( qobject_cast<QLineEdit*>( widget ) ) { _inputWidgetEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
-        else if( qobject_cast<QTextEdit*>( widget ) ) { _inputWidgetEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
-        else if( widget->inherits( "KTextEditor::View" ) ) { _inputWidgetEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
+        else if( qobject_cast<QLineEdit*>( widget ) ) { _inputWidgetEngine->registerWidget( widget, AnimationFocus ); }
+        else if( qobject_cast<QTextEdit*>( widget ) ) { _inputWidgetEngine->registerWidget( widget, AnimationFocus ); }
+        else if( widget->inherits( "KTextEditor::View" ) ) { _inputWidgetEngine->registerWidget( widget, AnimationFocus ); }
 
         // header views
         // need to come before abstract item view, otherwise is skipped
@@ -174,7 +174,7 @@ namespace Highcontrast
 
         // lists
         else if( qobject_cast<QAbstractItemView*>( widget ) )
-        { _inputWidgetEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
+        { _inputWidgetEngine->registerWidget( widget, AnimationFocus ); }
 
         // tabbar
         else if( qobject_cast<QTabBar*>( widget ) ) { _tabBarEngine->registerWidget( widget ); }
@@ -183,7 +183,7 @@ namespace Highcontrast
         else if( QAbstractScrollArea* scrollArea = qobject_cast<QAbstractScrollArea*>( widget ) ) {
 
             if( scrollArea->frameShadow() == QFrame::Sunken && (widget->focusPolicy()&Qt::StrongFocus) )
-            { _inputWidgetEngine->registerWidget( widget, AnimationHover|AnimationFocus ); }
+            { _inputWidgetEngine->registerWidget( widget, AnimationFocus ); }
 
         }
 

@@ -4627,8 +4627,11 @@ namespace Highcontrast
         if( useStrongFocus && sunken )
         {
 
-            QColor outlineColor = _helper->focusColor( palette );
-            _helper->renderFocusRect( painter, QRect( rect.left(), rect.bottom() - 2, rect.width(), 3 ), outlineColor );
+            painter->save();
+            painter->setBrush( palette.color( QPalette::WindowText ) );
+            painter->setPen( Qt::NoPen );
+            painter->drawRect( rect.left(), rect.bottom() - 3, rect.width(), 3 );
+            painter->restore();
 
         }
 
@@ -4722,7 +4725,11 @@ namespace Highcontrast
                 if( rect.right() >= menuItemOption->menuRect.right() ) sides |= SideRight;
             }
 
-            _helper->renderFocusRect( painter, rect, color, outlineColor, sides );
+            painter->save();
+            painter->setBrush( palette.color( QPalette::WindowText ) );
+            painter->setPen( Qt::NoPen );
+            painter->drawRect( rect );
+            painter->restore();
 
         }
 
@@ -6434,6 +6441,10 @@ namespace Highcontrast
 
             }
 
+            if ( hasFocus ) {
+                 _helper->renderFocusRect( painter, QRect( grooveRect ).adjusted(-3, -3, 4, 4), palette );
+            }
+
         }
 
         // handle
@@ -6454,8 +6465,8 @@ namespace Highcontrast
             qreal opacity( _animations->widgetStateEngine().buttonOpacity( widget ) );
 
             // define colors
-            QColor background( _helper->buttonBackgroundColor( palette, mouseOver, false, sunken, opacity, mode ).lighter() );
-            QColor outline( _helper->sliderOutlineColor( palette, handleActive && mouseOver, hasFocus, opacity, mode ) );
+            QColor background( palette.color( QPalette::Button ) );
+            QColor outline( _helper->sliderOutlineColor( palette, handleActive && sunken, hasFocus, opacity, mode ) );
             QColor shadow( _helper->shadowColor( palette ) );
 
             // render
@@ -6530,7 +6541,7 @@ namespace Highcontrast
 
             // handle state
             bool handleActive( mouseOver && handleRect.contains( _animations->dialEngine().position( widget ) ) );
-            bool sunken( state & (State_On|State_Sunken) );
+            bool sunken( state & (State_On|State_MouseOver) );
 
             // animation state
             _animations->dialEngine().setHandleRect( widget, handleRect );
@@ -6541,7 +6552,7 @@ namespace Highcontrast
 
             // define colors
             QColor background( palette.color( QPalette::Button ) );
-            QColor outline( _helper->sliderOutlineColor( palette, handleActive && mouseOver, hasFocus, opacity, mode ) );
+            QColor outline( _helper->sliderOutlineColor( palette, handleActive && sunken, hasFocus, opacity, mode ) );
             QColor shadow( _helper->shadowColor( palette ) );
 
             // render
@@ -6795,7 +6806,7 @@ namespace Highcontrast
 
         if (true) {
             painter->setPen(Qt::NoPen);
-            QColor background = Helper::mix( palette.base().color(), outline, 0.4 * opacity + 0.6 * pressedOpacity );
+            QColor background = Helper::mix( palette.base().color(), outline, 0.6 * pressedOpacity );
             painter->setBrush(background);
             if (subControl == SC_SpinBoxDown) {
                 if (hasFocus)
