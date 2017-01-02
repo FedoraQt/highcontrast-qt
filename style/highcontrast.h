@@ -138,9 +138,9 @@ namespace Highcontrast
 
         // sliders
         Slider_TickLength = 8,
-        Slider_TickMarginWidth = 2,
-        Slider_GrooveThickness = 3,
-        Slider_ControlThickness = 24,
+        Slider_TickMarginWidth = 4,
+        Slider_GrooveThickness = 7,
+        Slider_ControlThickness = 26,
 
         // tabbar
         TabBar_TabMarginHeight = 9,

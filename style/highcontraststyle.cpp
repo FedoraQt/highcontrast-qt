@@ -519,7 +519,7 @@ namespace Highcontrast
         palette.setColor(QPalette::All,      QPalette::Mid,             QColor("gray"));
         palette.setColor(QPalette::All,      QPalette::Shadow,          QColor("black"));
 
-        palette.setColor(QPalette::All,      QPalette::Highlight,       QColor("#4a90d9"));
+        palette.setColor(QPalette::All,      QPalette::Highlight,       QColor("#black"));
         palette.setColor(QPalette::All,      QPalette::HighlightedText, QColor("white"));
 
         palette.setColor(QPalette::All,      QPalette::Link,            QColor("#2a76c6"));
@@ -543,7 +543,7 @@ namespace Highcontrast
         palette.setColor(QPalette::Disabled, QPalette::Mid,             QColor("gray"));
         palette.setColor(QPalette::Disabled, QPalette::Shadow,          QColor("black"));
 
-        palette.setColor(QPalette::Disabled, QPalette::Highlight,       QColor("#4a90d9"));
+        palette.setColor(QPalette::Disabled, QPalette::Highlight,       QColor("black"));
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor("white"));
 
         palette.setColor(QPalette::Disabled, QPalette::Link,            QColor("#4a90d9"));
@@ -6376,9 +6376,9 @@ namespace Highcontrast
             QRect grooveRect( subControlRect( CC_Slider, sliderOption, SC_SliderGroove, widget ) );
 
             // base color
-            QColor grooveColor( _helper->buttonBackgroundColor( palette, false, false, true ) );
+            QColor grooveColor( _helper->buttonOutlineColor( palette, false, false ).lighter(115) );
             QColor outline( _helper->buttonOutlineColor( palette, false, false ) );
-            QColor highlightColor( palette.color( QPalette::Highlight ) );
+            QColor highlightColor( _helper->buttonBackgroundColor( palette, false, false, true ) );
             QColor highlightOutline( _helper->buttonOutlineColor( palette, false, false ).darker(250) );
 
             if( !enabled ) _helper->renderProgressBarGroove( painter, grooveRect, grooveColor, outline );

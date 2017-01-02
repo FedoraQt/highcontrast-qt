@@ -960,7 +960,7 @@ namespace Highcontrast
         painter->setRenderHint( QPainter::Antialiasing, true );
 
         QRectF baseRect( rect );
-        qreal radius( 0.5*Metrics::Slider_GrooveThickness );
+        qreal radius( Metrics::Slider_GrooveThickness );
 
         // content
         if( color.isValid() )
@@ -1060,7 +1060,7 @@ namespace Highcontrast
         if( outline.isValid() )
         {
 
-            QPen pen(outline);
+            QPen pen(outline, 2);
             pen.setCapStyle( Qt::FlatCap );
             pen.setJoinStyle( Qt::MiterJoin );
             painter->setPen(pen);
@@ -1092,39 +1092,6 @@ namespace Highcontrast
         circle.addEllipse(r);
         circle.closeSubpath();
 
-        if (ticks & SideBottom) {
-            QPainterPath triangle(r.center());
-            triangle.moveTo(r.left() + 1.5, r.center().y() + 5.5);
-            triangle.lineTo(r.center().x() + 1, r.bottom() + 4.5);
-            triangle.lineTo(r.right() - 0.5, r.center().y() + 5.5);
-            triangle.closeSubpath();
-            circle = circle.united(triangle);
-        }
-        else if (ticks & SideTop) {
-            QPainterPath triangle(r.center());
-            triangle.moveTo(r.left() + 1.5, r.center().y() - 3.5);
-            triangle.lineTo(r.center().x() + 1, r.top() - 2.5);
-            triangle.lineTo(r.right() - 0.5, r.center().y() - 3.5);
-            triangle.closeSubpath();
-            circle = circle.united(triangle);
-        }
-        else if (ticks & SideLeft) {
-            QPainterPath triangle(r.center());
-            triangle.moveTo(r.center().x() - 3.5, r.top() + 1.5);
-            triangle.lineTo(r.left() - 2.5, r.center().y() + 1);
-            triangle.lineTo(r.center().x() - 3.5, r.bottom() - 0.5);
-            triangle.closeSubpath();
-            circle = circle.united(triangle);
-        }
-        else if (ticks & SideRight) {
-            QPainterPath triangle(r.center());
-            triangle.moveTo(r.center().x() + 3.5, r.top() + 1.5);
-            triangle.lineTo(r.right() + 2.5, r.center().y() + 1);
-            triangle.lineTo(r.center().x() + 3.5, r.bottom() - 0.5);
-            triangle.closeSubpath();
-            circle = circle.united(triangle);
-        }
-
         painter->drawPath(circle);
 
     }
@@ -1139,7 +1106,7 @@ namespace Highcontrast
         painter->setRenderHint( QPainter::SmoothPixmapTransform, true );
 
         QRectF baseRect( rect );
-        qreal radius( 0.5 );
+        qreal radius( rect.height() < rect.width() ? rect.height() / 2 : rect.width() / 2 );
 
         // content
         if( color.isValid() )
