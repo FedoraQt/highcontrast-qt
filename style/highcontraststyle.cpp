@@ -527,23 +527,23 @@ namespace Highcontrast
 
         // Exceptions for disabled elements in a focused window
         palette.setColor(QPalette::Disabled, QPalette::Window,          QColor("white"));
-        palette.setColor(QPalette::Disabled, QPalette::WindowText,      QColor("black"));
+        palette.setColor(QPalette::Disabled, QPalette::WindowText,      QColor("gray"));
         palette.setColor(QPalette::Disabled, QPalette::Base,            QColor("white"));
         palette.setColor(QPalette::Disabled, QPalette::AlternateBase,   QColor("white"));
     //     palette.setColor(QPalette::Disabled, QPalette::ToolTipBase,     QColor("#ff1234"));
     //     palette.setColor(QPalette::Disabled, QPalette::ToolTipText,     QColor("#ff1234"));
-        palette.setColor(QPalette::Disabled, QPalette::Text,            QColor("black"));
+        palette.setColor(QPalette::Disabled, QPalette::Text,            QColor("gray"));
         palette.setColor(QPalette::Disabled, QPalette::Button,          QColor("white"));
-        palette.setColor(QPalette::Disabled, QPalette::ButtonText,      QColor("black"));
+        palette.setColor(QPalette::Disabled, QPalette::ButtonText,      QColor("gray"));
         palette.setColor(QPalette::Disabled, QPalette::BrightText,      QColor("white"));
 
         palette.setColor(QPalette::Disabled, QPalette::Light,           QColor("white"));
         palette.setColor(QPalette::Disabled, QPalette::Midlight,        QColor("white"));
-        palette.setColor(QPalette::Disabled, QPalette::Dark,            QColor("black"));
-        palette.setColor(QPalette::Disabled, QPalette::Mid,             QColor("gray"));
-        palette.setColor(QPalette::Disabled, QPalette::Shadow,          QColor("black"));
+        palette.setColor(QPalette::Disabled, QPalette::Dark,            QColor("gray"));
+        palette.setColor(QPalette::Disabled, QPalette::Mid,             QColor("light gray"));
+        palette.setColor(QPalette::Disabled, QPalette::Shadow,          QColor("gray"));
 
-        palette.setColor(QPalette::Disabled, QPalette::Highlight,       QColor("black"));
+        palette.setColor(QPalette::Disabled, QPalette::Highlight,       QColor("gray"));
         palette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor("white"));
 
         palette.setColor(QPalette::Disabled, QPalette::Link,            QColor("#4a90d9"));
