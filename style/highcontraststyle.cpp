@@ -568,7 +568,7 @@ namespace Highcontrast
         palette.setColor(QPalette::Inactive, QPalette::Mid,             QColor("gray"));
         palette.setColor(QPalette::Inactive, QPalette::Shadow,          QColor("black"));
 
-        palette.setColor(QPalette::Inactive, QPalette::Highlight,       QColor("#4a90d9"));
+        palette.setColor(QPalette::Inactive, QPalette::Highlight,       QColor("#black"));
         palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor("white"));
 
         palette.setColor(QPalette::Inactive, QPalette::Link,            QColor("#4a90d9"));
