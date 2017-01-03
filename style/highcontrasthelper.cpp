@@ -292,13 +292,12 @@ namespace Highcontrast
     }
 
     //______________________________________________________________________________
-    void Helper::renderFocusRect( QPainter* painter, const QRect& rect, const QPalette& palette ) const
+    void Helper::renderFocusRect(QPainter* painter, const QRect& rect, const QColor& color) const
     {
 
         painter->save();
 
-        QColor outlineColor( palette.color( QPalette::Dark ) );
-        QPen pen(outlineColor.darker(115), 2);
+        QPen pen(color, 2);
         pen.setStyle( Qt::CustomDashLine );
         pen.setDashPattern(QVector<qreal>() << 1 << 2);
 
@@ -1054,7 +1053,6 @@ namespace Highcontrast
 
         // setup painter
         painter->setRenderHint( QPainter::Antialiasing, true );
-        painter->setRenderHint( QPainter::SmoothPixmapTransform, true );
 
         QRectF baseRect( rect );
         qreal radius( rect.height() < rect.width() ? rect.height() / 2 : rect.width() / 2 );
@@ -1064,7 +1062,7 @@ namespace Highcontrast
         {
             painter->setPen( outline );
             painter->setBrush( color );
-            painter->drawRoundedRect( baseRect.translated(0.5, 0.5), radius, radius );
+            painter->drawRoundedRect( baseRect, radius, radius );
         }
 
         return;
@@ -1085,10 +1083,9 @@ namespace Highcontrast
         Q_UNUSED(reverse);
 
         // setup painter
-        painter->setRenderHint( QPainter::Antialiasing, true );
+        painter->setRenderHint( QPainter::Antialiasing, false );
 
         QRectF baseRect( rect );
-        qreal radius( 0.25*Metrics::ProgressBar_Thickness );
         QRectF contentRect;
         if (horizontal) {
             contentRect = QRect(baseRect.left(), baseRect.top(), Metrics::ProgressBar_BusyIndicatorSize, baseRect.height());
@@ -1099,9 +1096,11 @@ namespace Highcontrast
             contentRect.translate(0, fabs(progress - 50) / 50.0 * (baseRect.height() - contentRect.height()));
         }
 
+        qreal radius( contentRect.height() < contentRect.width() ? contentRect.height() / 2 : contentRect.width() / 2 );
+
         painter->setBrush(color);
-        painter->setPen(outline);
-        painter->drawRoundedRect(contentRect.translated(0.5, 0.5), radius, radius);
+        painter->setPen(color);
+        painter->drawRoundedRect(contentRect, radius, radius);
 
         return;
 

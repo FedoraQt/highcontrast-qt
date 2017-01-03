@@ -812,8 +812,13 @@ namespace Highcontrast
         {
 
             case SE_PushButtonContents: return pushButtonContentsRect( option, widget );
+            case SE_PushButtonFocusRect: return pushButtonFocusRect( option, widget );
             case SE_CheckBoxContents: return checkBoxContentsRect( option, widget );
+            case SE_CheckBoxIndicator: return checkBoxIndicatorRect( option, widget );
+            case SE_CheckBoxFocusRect: return checkBoxFocusRect( option, widget );
             case SE_RadioButtonContents: return checkBoxContentsRect( option, widget );
+            case SE_RadioButtonIndicator: return checkBoxIndicatorRect( option, widget );
+            case SE_RadioButtonFocusRect: return checkBoxFocusRect( option, widget );
             case SE_LineEditContents: return lineEditContentsRect( option, widget );
             case SE_ProgressBarGroove: return progressBarGrooveRect( option, widget );
             case SE_ProgressBarContents: return progressBarContentsRect( option, widget );
@@ -1561,8 +1566,26 @@ namespace Highcontrast
     { return insideMargin( option->rect, Metrics::Frame_FrameWidth ); }
 
     //___________________________________________________________________________________________________________________
+    QRect Style::pushButtonFocusRect(const QStyleOption* option, const QWidget* ) const
+    { return insideMargin( option->rect, 3 ); }
+
+    //___________________________________________________________________________________________________________________
     QRect Style::checkBoxContentsRect( const QStyleOption* option, const QWidget* ) const
-    { return visualRect( option, option->rect.adjusted( Metrics::CheckBox_Size + Metrics::CheckBox_ItemSpacing, 0, 0, 0 ) ); }
+    { return visualRect( option, option->rect.adjusted( Metrics::CheckBox_Size + 2 * Metrics::CheckBox_ItemSpacing, 0, 0, 0 ) ); }
+
+    //___________________________________________________________________________________________________________________
+    QRect Style::checkBoxIndicatorRect(const QStyleOption* option, const QWidget* widget ) const
+    { return ParentStyleClass::subElementRect( SE_CheckBoxIndicator, option, widget ).translated( Metrics::CheckBox_ItemSpacing, 0 ); }
+
+    //___________________________________________________________________________________________________________________
+    QRect Style::checkBoxFocusRect(const QStyleOption* option, const QWidget* widget ) const
+    {
+        return QRect( option->rect.left() + 2,
+                      option->rect.top() + 1,
+                      ParentStyleClass::subElementRect( SE_CheckBoxFocusRect, option, widget ).right() - option->rect.left(),
+                      option->rect.height() - 2
+                    );
+    }
 
     //___________________________________________________________________________________________________________________
     QRect Style::lineEditContentsRect( const QStyleOption* option, const QWidget* widget ) const
@@ -3178,13 +3201,14 @@ namespace Highcontrast
         #endif
 
         const State& state( option->state );
-        QRectF rect( QRectF(option->rect).adjusted( 0, 0, -1, -1 ) );
+        bool sunken( state & State_Sunken );
+        QRectF rect( QRectF(option->rect).adjusted( 0, 0, 0, 0 ) );
         const QPalette& palette( option->palette );
 
         if( rect.width() < 10 ) return true;
 
-        QColor outlineColor( palette.color( QPalette::Dark ) );
-        QPen pen(outlineColor.darker(115), 2);
+        QColor outlineColor( sunken ?  palette.color( QPalette::Dark ) : palette.color( QPalette::Light ) );
+        QPen pen( outlineColor, 2 );
         pen.setStyle( Qt::CustomDashLine );
         pen.setDashPattern(QVector<qreal>() << 1 << 2);
 
@@ -3228,7 +3252,7 @@ namespace Highcontrast
     }
 
     //______________________________________________________________
-    bool Style::drawFrameGroupBoxPrimitive( const QStyleOption* option, QPainter* painter, const QWidget* ) const
+    bool Style::drawFrameGroupBoxPrimitive( const QStyleOption* option, QPainter* painter, const QWidget* widget) const
     {
 
         // cast option and check
@@ -4980,7 +5004,7 @@ namespace Highcontrast
             }
 
 
-            _helper->renderProgressBarContents( painter, rect, palette.color( QPalette::Highlight ), outline );
+            _helper->renderProgressBarContents( painter, rect, palette.color(QPalette::WindowText), outline );
             painter->setClipRegion( oldClipRegion );
 
         }
@@ -4993,9 +5017,9 @@ namespace Highcontrast
     bool Style::drawProgressBarGrooveControl( const QStyleOption* option, QPainter* painter, const QWidget* ) const
     {
         const QPalette& palette( option->palette );
-        QColor color( _helper->buttonBackgroundColor( palette, false, false, true ) );
+        QColor color( _helper->buttonOutlineColor( palette, false, false).lighter(115) );
         QColor outline( _helper->buttonOutlineColor( palette, false, false ) );
-        _helper->renderProgressBarGroove( painter, option->rect, color, outline );
+        _helper->renderProgressBarGroove( painter, option->rect.adjusted(-1, -1, 1, 1), color, outline );
         return true;
     }
 
@@ -6209,7 +6233,7 @@ namespace Highcontrast
                     {
 
                         QStyleOption copy(*option);
-                        copy.rect.adjust(4, 4, -4, -4);
+                        copy.rect.adjust(3, 3, -3, -3);
                         drawPrimitive( PE_FrameFocusRect, &copy, painter, widget);
 
                     }
@@ -6442,7 +6466,8 @@ namespace Highcontrast
             }
 
             if ( hasFocus ) {
-                 _helper->renderFocusRect( painter, QRect( grooveRect ).adjusted(-3, -3, 4, 4), palette );
+                QColor focusColor( palette.color(QPalette::Dark).darker(115) );
+                _helper->renderFocusRect( painter, QRect( grooveRect ).adjusted(-3, -3, 4, 4), focusColor);
             }
 
         }
