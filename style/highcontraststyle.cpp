@@ -4248,7 +4248,12 @@ namespace Highcontrast
 
         // color role
         QPalette::ColorRole textRole;
-        if( flat )
+        if ( sunken )
+        {
+
+            textRole = QPalette::Button;
+
+        } else if( flat )
         {
 
             if( hasFocus && sunken ) textRole = QPalette::ButtonText;
