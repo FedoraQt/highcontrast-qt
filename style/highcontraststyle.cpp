@@ -5518,7 +5518,7 @@ namespace Highcontrast
             painter->setFont(font);
             if (tabV2.state & State_Selected)
                 painter->setPen(option->palette.brush(QPalette::WindowText).color());
-            else if (tabV2.state & State_MouseOver)
+            else if (tabV2.state & State_Enabled && tabV2.state & State_MouseOver)
                 painter->setPen(option->palette.brush(QPalette::Mid).color().darker(150));
             else
                 painter->setPen(option->palette.brush(QPalette::Mid).color().darker(130));
@@ -5621,7 +5621,7 @@ namespace Highcontrast
         const State& state( option->state );
         bool enabled( state & State_Enabled );
         bool selected( state & State_Selected );
-        bool mouseOver( !selected && ( state & State_MouseOver ) );
+        bool mouseOver( enabled && !selected && ( state & State_MouseOver ) );
 
         // check if tab is being dragged
         bool isDragged( widget && selected && painter->device() != widget );
