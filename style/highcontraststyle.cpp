@@ -3359,7 +3359,7 @@ namespace Highcontrast
         // get rect, orientation, palette
         QRect rect( option->rect );
         QColor outline( _helper->frameOutlineColor( option->palette ) );
-        QColor background( option->palette.mid().color().lighter(115) );
+        QColor background( _helper->mix( option->palette.color(QPalette::Dark), option->palette.color(QPalette::Light), 0.84 ) );
 
         // setup painter
         painter->setBrush( background );
