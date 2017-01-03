@@ -3201,13 +3201,13 @@ namespace Highcontrast
         #endif
 
         const State& state( option->state );
-        bool sunken( state & State_Sunken );
+        bool sunken( !(qobject_cast<const QCheckBox*>(widget) || qobject_cast<const QRadioButton*>(widget)) && state & (State_Sunken|State_On) );
         QRectF rect( QRectF(option->rect).adjusted( 0, 0, 0, 0 ) );
         const QPalette& palette( option->palette );
 
         if( rect.width() < 10 ) return true;
 
-        QColor outlineColor( sunken ?  palette.color( QPalette::Dark ) : palette.color( QPalette::Light ) );
+        QColor outlineColor( sunken ? palette.color( QPalette::Light ) : palette.color( QPalette::Dark ) );
         QPen pen( outlineColor, 2 );
         pen.setStyle( Qt::CustomDashLine );
         pen.setDashPattern(QVector<qreal>() << 1 << 2);
