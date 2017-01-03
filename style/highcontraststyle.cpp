@@ -6472,7 +6472,7 @@ namespace Highcontrast
 
             if ( hasFocus ) {
                 QColor focusColor( palette.color(QPalette::Dark).darker(115) );
-                _helper->renderFocusRect( painter, QRect( grooveRect ).adjusted(-3, -3, 4, 4), focusColor);
+                _helper->renderFocusRect( painter, QRect( grooveRect ).adjusted(-4, -4, 4, 4), focusColor);
             }
 
         }
