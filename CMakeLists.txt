@@ -17,6 +17,13 @@ else()
     set(QT_QTDBUS_LIBRARY Qt5::DBus)
     #target_link_libraries(${LIBRARY_NAME} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
     set(QT_VERSION_NUMBER "5")
+    get_target_property(REAL_QMAKE_EXECUTABLE ${Qt5Core_QMAKE_EXECUTABLE}
+                       IMPORTED_LOCATION)
+    if (NOT QT_PLUGINS_DIR)
+        execute_process(COMMAND "${REAL_QMAKE_EXECUTABLE}" -query QT_INSTALL_PLUGINS
+                        OUTPUT_VARIABLE QT_PLUGINS_DIR
+                        ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+    endif()
 endif()
 
 if (NOT CMAKE_INSTALL_PREFIX)
