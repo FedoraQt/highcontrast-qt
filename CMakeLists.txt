@@ -30,17 +30,6 @@ if (NOT CMAKE_INSTALL_PREFIX)
     set (CMAKE_INSTALL_PREFIX "/usr/local")
 endif()
 
-if (NOT QT_ROOT)
-    set(QT_ROOT "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/qt${QT_VERSION_NUMBER}")
-endif()
-
-if (NOT QT_PLUGIN_PATH)
-    set(QT_PLUGIN_PATH "${QT_ROOT}/plugins")
-endif()
-if (NOT QT_STYLE_PATH)
-    set(QT_STYLE_PATH "${QT_PLUGIN_PATH}/styles")
-endif()
-
 if (NOT DATA_INSTALL_DIR)
     set (DATA_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share")
 endif()
